@@ -25,9 +25,35 @@ app.get("/workers", async (req, res) => {
 	}
 });
 
+app.get("/workers/:worker_id", async (req, res) => {
+	try {
+		const id = parseInt(req.params.worker_id);
+		const workers = await pool.query(
+			"SELECT * FROM workers WHERE worker_id = $1",
+			[id]
+		);
+		res.send(workers.rows);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
 app.get("/tickets", async (req, res) => {
 	try {
 		const tickets = await pool.query("SELECT * FROM tickets");
+		res.send(tickets.rows);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
+app.get("/tickets/:ticket_id", async (req, res) => {
+	try {
+		const id = parseInt(req.params.ticket_id);
+		const tickets = await pool.query(
+			"SELECT * FROM tickets WHERE ticket_id = $1",
+			[id]
+		);
 		res.send(tickets.rows);
 	} catch (err) {
 		console.error(err);
