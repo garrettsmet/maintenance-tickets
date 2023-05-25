@@ -9,7 +9,7 @@ import { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-export default function TicketListRow(ticket) {
+export default function WorkerListRow(worker) {
 	const [open, setOpen] = useState(false);
 	return (
 		<>
@@ -19,15 +19,14 @@ export default function TicketListRow(ticket) {
 						{open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
 					</IconButton>
 				</TableCell>
-				<TableCell>{ticket.ticket.ticket_id}</TableCell>
-				<TableCell>{ticket.ticket.category}</TableCell>
-				<TableCell>{ticket.ticket.size}</TableCell>
-				<TableCell>{ticket.ticket.urgency}</TableCell>
+				<TableCell>{worker.worker.worker_id}</TableCell>
+				<TableCell>{worker.worker.first_name}</TableCell>
+				<TableCell>{worker.worker.last_name}</TableCell>
 			</TableRow>
 			<TableRow>
 				<TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
 					<Collapse in={open} unmountOnExit>
-						<Typography py={2}>{ticket.ticket.description}</Typography>
+						<Typography py={2}>TEMP</Typography>
 					</Collapse>
 				</TableCell>
 			</TableRow>
