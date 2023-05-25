@@ -1,4 +1,4 @@
-# maintence-tickets
+# maintenence-tickets
 
 ## PostgreSQL
 
