@@ -1,4 +1,6 @@
 import express from "express";
+import { ticketToDTO } from "./functions/ticketToDTO";
+import { workerToDTO } from "./functions/workerToDTO";
 
 const bodyParser = require("body-parser");
 
@@ -19,7 +21,11 @@ const pool = new Pool({
 app.get("/workers", async (req, res) => {
 	try {
 		const workers = await pool.query("SELECT * FROM workers");
-		res.send(workers.rows);
+		const workerDTOs = [];
+		for (let i = 0; i < workers.rowCount; i++) {
+			workerDTOs.push(workerToDTO(workers.rows[i]));
+		}
+		res.send(workerDTOs);
 	} catch (err) {
 		console.error(err);
 	}
@@ -41,7 +47,11 @@ app.get("/workers/:worker_id", async (req, res) => {
 app.get("/tickets", async (req, res) => {
 	try {
 		const tickets = await pool.query("SELECT * FROM tickets");
-		res.send(tickets.rows);
+		const ticketDTOs = [];
+		for (let i = 0; i < tickets.rowCount; i++) {
+			ticketDTOs.push(ticketToDTO(tickets.rows[i]));
+		}
+		res.send(ticketDTOs);
 	} catch (err) {
 		console.error(err);
 	}
@@ -64,4 +74,4 @@ app.get("/test/:testId", (req, res) => {
 	return res.send(`Received get on test/${req.params.testId}`);
 });
 
-app.listen(3000, () => console.log("Starting..."));
+app.listen(3001, () => console.log("Starting..."));
