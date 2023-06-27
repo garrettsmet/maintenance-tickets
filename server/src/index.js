@@ -1,6 +1,7 @@
 import express from "express";
 import { ticketToDTO } from "./functions/ticketToDTO";
 import { workerToDTO } from "./functions/workerToDTO";
+import { assignmentToDTO } from "./functions/assignmentToDTO";
 
 const bodyParser = require("body-parser");
 
@@ -8,6 +9,7 @@ const app = express();
 var cors = require("cors");
 
 app.use(cors());
+app.use(express.json());
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
@@ -65,6 +67,49 @@ app.get("/tickets/:ticket_id", async (req, res) => {
 			[id]
 		);
 		res.send(tickets.rows);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
+app.post("/assign", (req, res) => {
+	try {
+		const data = req.body;
+
+		const response = pool.query(
+			"INSERT INTO assigned_to (ticket_id, worker_id) VALUES ($1, $2)",
+			[data.ticketId, data.workerId]
+		);
+		res.send(response);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
+app.get("/assign", async (req, res) => {
+	try {
+		const assignments = await pool.query("SELECT * FROM assigned_to");
+		const assignmentDTOs = [];
+		for (let i = 0; i < assignments.rowCount; i++) {
+			assignmentDTOs.push(assignmentToDTO(assignments.rows[i]));
+		}
+		res.send(assignmentDTOs);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
+app.get("/assign/:worker_id", async (req, res) => {
+	try {
+		const assignments = await pool.query(
+			"SELECT * FROM assigned_to WHERE worker_id = $1",
+			[req.params.worker_id]
+		);
+		const assignmentDTOs = [];
+		for (let i = 0; i < assignments.rowCount; i++) {
+			assignmentDTOs.push(assignmentToDTO(assignments.rows[i]));
+		}
+		res.send(assignmentDTOs);
 	} catch (err) {
 		console.error(err);
 	}

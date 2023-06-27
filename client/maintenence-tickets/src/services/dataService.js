@@ -13,3 +13,24 @@ export function getWorkers() {
 		.get(SERVER_ADDRESS + "workers")
 		.then((res) => JSON.parse(res.request.response));
 }
+
+export function assign(ticket_id, worker_id) {
+	return axios
+		.post(SERVER_ADDRESS + "assign", {
+			ticketId: ticket_id,
+			workerId: worker_id,
+		})
+		.then((res) => res.request.response);
+}
+
+export function getAssignments() {
+	return axios
+		.get(SERVER_ADDRESS + "assign")
+		.then((res) => JSON.parse(res.request.response));
+}
+
+export function getAssignmentsByWorkerId(worker_id) {
+	return axios
+		.get(`${SERVER_ADDRESS}assign/${worker_id}`)
+		.then((res) => JSON.parse(res.request.response));
+}
