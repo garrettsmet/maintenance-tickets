@@ -13,19 +13,28 @@ import { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useWorkers } from "../hooks/useWorkers";
-import TicketDialogListRow from "./ticketDialogListRow";
+import {
+	TicketDialogListRowAssign,
+	TicketDialogListRowUnassign,
+} from "./ticketDialogListRow";
 
 export default function TicketListRow(ticket, index) {
 	const [collapseOpen, setCollapseOpen] = useState(false);
-	const [dialogOpen, setDialogOpen] = useState(false);
+	const [assignDialogOpen, setAssignDialogOpen] = useState(false);
+	const [unassignDialogOpen, setUnassignDialogOpen] = useState(false);
 	const { workers } = useWorkers();
 
-	const handleClick = () => {
-		setDialogOpen(!dialogOpen);
+	const handleClickAssign = () => {
+		setAssignDialogOpen(!assignDialogOpen);
+	};
+
+	const handleClickUnassign = () => {
+		setUnassignDialogOpen(!unassignDialogOpen);
 	};
 
 	const handleClose = () => {
-		setDialogOpen(false);
+		setAssignDialogOpen(false);
+		setUnassignDialogOpen(false);
 	};
 
 	return (
@@ -50,18 +59,25 @@ export default function TicketListRow(ticket, index) {
 						<Box display={"flex"}>
 							<Button
 								variant="contained"
-								onClick={handleClick}
+								onClick={handleClickAssign}
 								sx={{ marginRight: "6vw" }}
 							>
 								Assign
+							</Button>
+							<Button
+								variant="contained"
+								sx={{ marginRight: "6vw" }}
+								onClick={handleClickUnassign}
+							>
+								Unassign
 							</Button>
 							<Typography py={2}>{ticket.ticket.description}</Typography>
 						</Box>
 					</Collapse>
 				</TableCell>
 			</TableRow>
-			{dialogOpen && (
-				<Dialog open={dialogOpen} onClose={handleClose}>
+			{assignDialogOpen && (
+				<Dialog open={assignDialogOpen} onClose={handleClose}>
 					<Box padding={5}>
 						<Typography>
 							Assigning workers for ticket: <br />
@@ -69,7 +85,29 @@ export default function TicketListRow(ticket, index) {
 						</Typography>
 						<Table>
 							{workers.map((worker) => {
-								return <TicketDialogListRow ticket={ticket} worker={worker} />;
+								return (
+									<TicketDialogListRowAssign ticket={ticket} worker={worker} />
+								);
+							})}
+						</Table>
+					</Box>
+				</Dialog>
+			)}
+			{unassignDialogOpen && (
+				<Dialog open={unassignDialogOpen} onClose={handleClose}>
+					<Box padding={5}>
+						<Typography>
+							Unassigning workers for ticket: <br />
+							<strong>{ticket.ticket.description}</strong>
+						</Typography>
+						<Table>
+							{workers.map((worker) => {
+								return (
+									<TicketDialogListRowUnassign
+										ticket={ticket}
+										worker={worker}
+									/>
+								);
 							})}
 						</Table>
 					</Box>

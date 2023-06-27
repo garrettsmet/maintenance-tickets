@@ -1,19 +1,9 @@
-import {
-	IconButton,
-	Table,
-	TableCell,
-	TableHead,
-	TableRow,
-	Typography,
-} from "@mui/material";
-import { useState } from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Table, TableCell, TableHead, TableRow } from "@mui/material";
 import { useTickets } from "../hooks/useTickets";
 import TicketListRow from "./ticketListRow";
 
 export default function TicketList(tix) {
-	const { tickets, setTickets } = useTickets();
+	const { tickets } = useTickets();
 
 	return (
 		<Table>
@@ -31,7 +21,4 @@ export default function TicketList(tix) {
 			})}
 		</Table>
 	);
-}
-
-{
 }

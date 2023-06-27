@@ -5,7 +5,7 @@ import {
 	TableRow,
 	Typography,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useAssignments } from "../hooks/useAssignments";
@@ -37,10 +37,12 @@ export default function WorkerListRow(worker, index) {
 							{" "}
 							Assigned to:
 							{assignments.map((assignment) => {
-								if (assignment.worker_id == worker.worker.worker_id) {
+								if (assignment.worker_id === worker.worker.worker_id) {
 									return (
 										<AssignmentText assignment={assignment} index={index} />
 									);
+								} else {
+									return <></>;
 								}
 							})}
 						</Typography>
