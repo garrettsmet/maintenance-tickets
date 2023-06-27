@@ -27,7 +27,7 @@ export default function TicketList(tix) {
 				</TableRow>
 			</TableHead>
 			{tickets.map((ticket, index) => {
-				return <TicketListRow ticket={ticket} />;
+				return <TicketListRow ticket={ticket} key={index} />;
 			})}
 		</Table>
 	);
