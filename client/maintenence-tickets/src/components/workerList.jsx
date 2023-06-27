@@ -17,7 +17,7 @@ export default function WorkerList(worker) {
 				</TableRow>
 			</TableHead>
 			{workers.map((worker, index) => {
-				return <WorkerListRow worker={worker} />;
+				return <WorkerListRow worker={worker} key={index} />;
 			})}
 		</Table>
 	);
