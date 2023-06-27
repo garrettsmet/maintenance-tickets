@@ -23,6 +23,15 @@ export function assign(ticket_id, worker_id) {
 		.then((res) => res.request.response);
 }
 
+export function unassign(ticket_id, worker_id) {
+	return axios
+		.post(SERVER_ADDRESS + "unassign", {
+			ticketId: ticket_id,
+			workerId: worker_id,
+		})
+		.then((res) => res.request.response);
+}
+
 export function getAssignments() {
 	return axios
 		.get(SERVER_ADDRESS + "assign")

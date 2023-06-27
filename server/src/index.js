@@ -115,6 +115,23 @@ app.get("/assign/:worker_id", async (req, res) => {
 	}
 });
 
+app.post("/unassign", async (req, res) => {
+	try {
+		const data = req.body;
+
+		const response = await pool.query(
+			"DELETE FROM assigned_to WHERE worker_id = $1 AND ticket_id = $2",
+			[data.workerId, data.ticketId]
+		);
+		console.log(
+			"Deleted assignment: Worker " + data.workerId + " Ticket " + data.ticketId
+		);
+		res.send(response);
+	} catch (err) {
+		console.error(err);
+	}
+});
+
 app.get("/test/:testId", (req, res) => {
 	return res.send(`Received get on test/${req.params.testId}`);
 });
