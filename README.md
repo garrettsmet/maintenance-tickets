@@ -1,6 +1,13 @@
-# maintenence-tickets
+# maintanence-tickets
 
-## PostgreSQL
+## Technology
+
+Postgresql local database
+ExpressJS API
+ReactJS frontend
+Node.js web framework
+
+## Commands
 
 To open db: run psql -d maintenence_tickets -U api
 Password: api
