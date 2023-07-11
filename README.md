@@ -2,10 +2,10 @@
 
 ## Technology
 
-Postgresql local database
-ExpressJS API
-ReactJS frontend
-Node.js web framework
+Postgresql local database <br>
+ExpressJS API <br>
+ReactJS frontend <br>
+Node.js web framework <br>
 
 ## Commands
 
